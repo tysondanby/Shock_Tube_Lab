@@ -1,7 +1,7 @@
 using Roots
 #Follow proceedure outlined in text pg 180 (steps 2-8, 1 was done in prelimcalcs.jl)
 
-p2_div_p1 = solver(eq5_36,1.01)#,p4/p1)#step2
+p2_div_p1 = solver(eq5_36,2.0)#,p4/p1)#step2
 p2 = p2_div_p1*p1
 Si = eq5_32(p2_div_p1)#step3
 v2 = eq5_35(p2_div_p1)#step4

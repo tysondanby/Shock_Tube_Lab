@@ -47,7 +47,14 @@ xshocks = [xd]
 shockreflected = false
 shockaheadcs = true
 
+#println(Si)
+#println(Sr)
+#println(Vexpansionfront)
+#println(Vexpansiontail)
+
 while shockaheadcs
+    #println("Simulation time:")
+    #println(ts[end])
     push!(ts,ts[end]+tstep)
     for i = 1:1:nexpansions
         if expansionreflected[i] == false
@@ -90,19 +97,29 @@ maxdrivergas = ["air"]
 maxdrivengas = ["air"]
 maxdrivertemp = [280.0]
 maxdrivertemp = [400.0]
-for drivergas in gasoptions
-    for drivertemp in tempoptions
-        for drivengas in gasoptions
-            for driventemp in tempoptions
-                equation5_36(x) = eq5_36_general(p2overp1,drivengas,drivergas,driventemp,drivertemp)
+for i = 1:1:length(gasoptions)
+    for j = 1:1:length(tempoptions)
+        for k = 1:1:length(gasoptions)
+            for l = 1:1:length(tempoptions)
+                drivengas = gasoptions[i]
+                drivergas = gasoptions[k]
+                driventemp = tempoptions[j]
+                drivertemp = tempoptions[l]
+                equation5_36(x) = eq5_36_general(p2_div_p1,drivengas,drivergas,driventemp,drivertemp)
+                #=
+                testpts = collect(0:0.01:10)
+                values = @. equation5_36(testpts) 
+                global debugplot = plot(testpts,values)
+                # =#
                 pressureratio = solver(equation5_36,1.01)#,p4/p1)#step2
                 if pressureratio > maxpressureratio
-                    maxpressureratio = pressureratio
-                    maxdrivergas = drivergas
-                    maxdrivengas = drivengas
-                    maxdrivertemp = drivertemp
-                    maxdriventemp = driventemp
+                    global maxpressureratio = pressureratio
+                    global maxdrivergas = drivergas
+                    global maxdrivengas = drivengas
+                    global maxdrivertemp = drivertemp
+                    global maxdriventemp = driventemp
                 end
+                println("Through the loop")
             end
         end
     end

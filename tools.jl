@@ -24,7 +24,7 @@ function bisectionsolver(f,ub,lb)
     return root
 end
 
-function solver(f,start)
+function old_solver(f,start)
     zero_enough = 1e-8
     step = 1e-5
     root = start
@@ -34,6 +34,23 @@ function solver(f,start)
         println(abs(f(root)))
         root = root+step*abs(value)
         value = f(root)
+    end
+    return root
+end
+
+function solver(f,start)
+    zero_enough = 1e-9
+    dx = 1e-8
+    underrelaxation = 0.1
+    root = start
+    while abs(f(root)) > zero_enough
+        println(root)
+        println(f(root))
+        dydx = (f(root+dx) - f(root-dx))/(2*dx)
+        root = root - underrelaxation*f(root)/dydx
+        if abs(root) > 1e3
+            error("Divergent behavior detected")
+        end
     end
     return root
 end
