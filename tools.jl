@@ -44,8 +44,8 @@ function solver(f,start)
     underrelaxation = 0.1
     root = start
     while abs(f(root)) > zero_enough
-        println(root)
-        println(f(root))
+        #println(root)
+        #println(f(root))
         dydx = (f(root+dx) - f(root-dx))/(2*dx)
         root = root - underrelaxation*f(root)/dydx
         if abs(root) > 1e3

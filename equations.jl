@@ -47,10 +47,6 @@ end
 function eq5_36_general(p2overp1,gas1,gas4,T1,T4)
     gamma1, R1 = gasprops(gas1)
     gamma4, R4 = gasprops(gas4)
-    #println(gamma1)
-    #println(gamma4)
-    #println(R1)
-    #println(R4)
     a_1 = sqrt(gamma1*R1*T1)
     a_4 = sqrt(gamma4*R4*T4)
     num = (gamma4-1)*(a_1/a_4)*(p2overp1-1)
@@ -58,6 +54,7 @@ function eq5_36_general(p2overp1,gas1,gas4,T1,T4)
     ex = -2*gamma4/(gamma4-1)
     return p2overp1*(1-num/den)^ex - (p4/p1)
 end
+
 
 function eq5_35_general(p2overp1,gamma1, a_1)
     num = (2*gamma1)/(gamma1+1)
